@@ -177,7 +177,10 @@ def fix_kwargs_for_hub(**kwargs):
     value_fields = {"tx_nout", "has_source", "is_signature_valid"}
     opcodes = {'=': 0, '<=': 1, '>=': 2, '<': 3, '>': 4}
     for key, value in list(kwargs.items()):
-        if key in REPLACEMENTS:
+        if value in (None, [], False):
+            kwargs.pop(key)
+            continue
+        elif key in REPLACEMENTS:
             kwargs[REPLACEMENTS[key]] = kwargs.pop(key)
             key = REPLACEMENTS[key]
 
